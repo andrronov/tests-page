@@ -1,20 +1,31 @@
+<!-- USING VUETIFY -->
 <template>
   <h1>Test</h1>
   <div v-if="showTest" class="content_test">
     <h3>Вопрос №{{questionId + 1}}<br>{{test[questionId].question}}</h3>
     <div class="test_inputs">
     <label v-for="(variant, index) in test[questionId].variants" :key="index" class="answer" >
-      {{variant}}
+      <p class="input_question">{{variant}}</p>
       <input v-model="userAnswer" type="radio" id="answer_1" name="answer" :value="index + 1" />
     </label>
     </div>
   </div>
   <p v-if="!showTest">Правильных ответов: {{ rightUserAnswers }}</p>
   <div v-if="showTest" class="test_buttons">
-    <button :disabled="questionId <= 0" @click="changeQuestion('previous')">Предыдущий вопрос</button>
-    <button :disabled="questionId===this.test.length - 1" @click="changeQuestion('next')">Следующий вопрос</button>
-    <button @click="endTest">Посмотреть результат</button>
+    <v-btn :disabled="questionId <= 0" @click="changeQuestion('previous')">Предыдущий вопрос</v-btn>
+    <v-btn :disabled="questionId===this.test.length - 1" @click="changeQuestion('next')">Следующий вопрос</v-btn>
+    <v-btn @click="endTest">Закончить выполнение теста</v-btn>
   </div>
+
+  <!-- <v-pagination v-model="questionId" :length="test.length"></v-pagination> -->
+
+  <v-snackbar v-model="snackbar" vertical>
+    <div class="text-subtitle-1 pb-2">Тест пройден!</div>
+    <p>Спасибо за прохождение теста!</p>
+    <template v-slot:actions>
+      <v-btn color="indigo" variant="text" @click="snackbar = false">Close</v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -29,24 +40,20 @@ export default {
       test: footballTest,
       userAnswer: null,
       rightUserAnswers: 0,
+      snackbar: false,
     }
   },
   methods: {
-    aaa(){
-      footballTest.forEach(element => {
-        console.log(element)
-      });
-     console.log(this.test.length); 
-    },
-    wtiteAnswer(){
+    writeAnswer(){
       if(this.userAnswer == this.test[this.questionId].rightAnswerIdx){
         this.rightUserAnswers++;
       }else{
         console.log('answer is wrong')
       }
+      this.userAnswer = 0;
     },
     changeQuestion(data){
-      this.wtiteAnswer();
+      this.writeAnswer();
       if(data == 'previous'){
         this.questionId--;
       } else if(data == 'next'){
@@ -56,12 +63,11 @@ export default {
       }
     },
     endTest(){
+      this.writeAnswer();
+      this.snackbar = true;
       this.showTest = !this.showTest
     }
   },
-  mounted(){
-    this.aaa();
-  }
 };
 </script>
 
@@ -77,5 +83,9 @@ export default {
 .test_inputs{
   display: flex;
   flex-direction: column;
+}
+.input_question{
+  font-size: 1.15rem;
+  font-weight: 400;
 }
 </style>
