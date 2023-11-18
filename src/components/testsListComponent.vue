@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <h2 class="title">Здравствуйте! Выберите тест, который хотите пройти:</h2>
+    <h2 class="title">Выберите тест, который хотите пройти:</h2>
     <!-- <v-card>
       <v-list :items="tests" item-title="title" item-value="description">
          <template v-slot:subtitle="{ description }">
@@ -82,22 +82,5 @@ export default {
 </script>
 
 <style lang="scss">
-.title{
-  text-align: center;
-  color: white;
-  background-color: #1a237e;
-  padding: 5px;
-  margin-top: 15px;
-} .title:hover{color: #1a237e; background-color: white; transition: ease-in-out all 0.5s;}
-.wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.skelet-loader {
-  margin: 10px auto;
-  width: 90%;
-}
+@import url('../styles/main_style.scss');
 </style>

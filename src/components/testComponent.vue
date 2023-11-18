@@ -1,5 +1,5 @@
 <template>
-  <div v-if="test" class="aaa">
+  <div v-if="test" class="content-loader">
   <h1>Test</h1>
   <div v-if="showTest" class="content_test">
     <h3>Вопрос №{{ questionId + 1 }}<br />{{ test.testData[questionId].question }}</h3>
@@ -113,35 +113,5 @@ export default {
 </script>
 
 <style lang="scss">
-.content_test {
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-}
-.answer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.test_inputs {
-  display: flex;
-  flex-direction: column;
-}
-.input_question {
-  font-size: 1.15rem;
-  font-weight: 400;
-}
-.answer {
-  margin: 2.5px 0px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-}
-.answer input {
-  height: 28px;
-  width: 28px;
-}
+@import url('../styles/main_style.scss');
 </style>
