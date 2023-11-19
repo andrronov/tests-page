@@ -1,17 +1,10 @@
 <template>
   <div class="wrapper">
     <h2 class="title">Выберите тест, который хотите пройти:</h2>
-    <!-- <v-card>
-      <v-list :items="tests" item-title="title" item-value="description">
-         <template v-slot:subtitle="{ description }">
-            <div>{{ description }}</div>
-          </template>
-      </v-list>
-    </v-card> -->
     <v-container v-if="allTests">
       <v-col>
         <v-col v-for="(test, i) in allTests.testsList" :key="i">
-          <v-card :color="color" :variant="variant">
+          <v-card color="indigo-darken-3" variant="outlined">
             <v-card-item>
               <div>
                 <div class="text-h6 mb-1">{{ test.title }}</div>
@@ -31,27 +24,28 @@
       </v-col>
     </v-container>
   </div>
-  <v-skeleton-loader
-    v-if="!allTests"
-    :elevation="10"
-    class="skelet-loader"
-    color="outlined blue-lighten-4"
-    type="text@3, text, button"
-  ></v-skeleton-loader>
-  <v-skeleton-loader
-    v-if="!allTests"
-    :elevation="10"
-    class="skelet-loader"
-    color="outlined blue-lighten-4"
-    type="text@3, text, button"
-  ></v-skeleton-loader>
-  <v-skeleton-loader
-    v-if="!allTests"
-    :elevation="10"
-    class="skelet-loader"
-    color="outlined blue-lighten-4"
-    type="text@3, text, button"
-  ></v-skeleton-loader>
+
+  <!-- skeleton loader -->
+  <v-container v-if="!allTests">
+    <v-skeleton-loader
+      :elevation="10"
+      class="skelet-loader"
+      color="outlined blue-lighten-4"
+      type="text@3, text, button"
+    ></v-skeleton-loader>
+    <v-skeleton-loader
+      :elevation="10"
+      class="skelet-loader"
+      color="outlined blue-lighten-4"
+      type="text@3, text, button"
+    ></v-skeleton-loader>
+    <v-skeleton-loader
+      :elevation="10"
+      class="skelet-loader"
+      color="outlined blue-lighten-4"
+      type="text@3, text, button"
+    ></v-skeleton-loader>
+  </v-container>
 </template>
 
 <script>
@@ -60,8 +54,6 @@ export default {
   data() {
     return {
       allTests: null,
-      variant: "outlined",
-      color: "indigo-darken-3",
     };
   },
   methods: {
@@ -82,5 +74,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('../styles/main_style.scss');
+@import url("../styles/main_style.scss");
 </style>
