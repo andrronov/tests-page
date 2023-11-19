@@ -16,7 +16,7 @@
 
             <v-card-actions>
               <router-link :to="{ name: 'test', params: { id: test.path } }">
-                <v-btn> Пройти </v-btn>
+                <v-btn variant="outlined" color="indigo-darken-3"> Пройти </v-btn>
               </router-link>
             </v-card-actions>
           </v-card>

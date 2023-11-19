@@ -3,10 +3,10 @@
     <h2 class="title">Здравствуйте! Выберите действие:</h2>
     <div class="page_buttons">
       <router-link to="/tests">
-        <v-btn variant="outlined" size="x-large"> Пройти тест </v-btn>
+        <v-btn variant="outlined" size="x-large" elevation="4"> Пройти тест </v-btn>
       </router-link>
       <router-link to="/">
-        <v-btn variant="outlined" size="x-large" @click="dialog = true"> Создать тест </v-btn>
+        <v-btn variant="outlined" size="x-large" elevation="4" @click="dialog = true"> Создать тест </v-btn>
       </router-link>
     </div>
   </div>
