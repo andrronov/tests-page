@@ -3,7 +3,7 @@
     
     <div class="test_window">
       <div v-if="showTest" class="test_wrap">
-      <h1>Тест, Вопрос №{{ questionId + 1 }}/{{test.testData.length}}</h1>
+      <h1>Вопрос {{ questionId + 1 }}/{{test.testData.length}}</h1>
       <div class="content_test">
         <p class="test_question">{{
           test.testData[questionId].question

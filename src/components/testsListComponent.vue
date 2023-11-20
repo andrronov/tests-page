@@ -1,8 +1,49 @@
 <template>
+  <header class="header">
+    <v-container class="d-flex align-center">
+      <v-autocomplete
+        class="header_search"
+        style="color: white"
+        variant="outlined"
+        label="Найти тест"
+        :items="allTests?.testsList"
+        @keydown.enter="findSearchedTest"
+        v-model="searchValue"
+      ></v-autocomplete>
+      <v-btn @click="findSearchedTest" icon="mdi-magnify"></v-btn>
+    </v-container>
+  </header>
+
   <div class="wrapper">
     <h2 class="title">Выберите тест, который хотите пройти:</h2>
+    <v-container v-if="allTests?.newTestArray">
+      <div class="title_button" style="display: flex; flex-direction: column; gap:10px">
+        <h4 class="title">Найденные тесты</h4>
+      <v-btn @click="allTests.newTestArray = 0" variant="outlined">Отменить поиск</v-btn>
+      </div>
+      <v-col v-for="(test, i) in allTests.newTestArray" :key="i">
+        <v-card color="indigo-darken-3" variant="outlined">
+          <v-card-item>
+            <div>
+              <div class="text-h6 mb-1">{{ test.title }}</div>
+              <div class="text-caption">
+                {{ test.description }}
+              </div>
+            </div>
+          </v-card-item>
+
+          <v-card-actions>
+            <router-link :to="{ name: 'test', params: { id: test.path } }">
+              <v-btn variant="outlined" color="indigo-darken-3">
+                Пройти
+              </v-btn>
+            </router-link>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-container>
     <v-container v-if="allTests">
-      <v-col>
+      <h4 class="title">Все тесты</h4>
         <v-col v-for="(test, i) in allTests.testsList" :key="i">
           <v-card color="indigo-darken-3" variant="outlined">
             <v-card-item>
@@ -16,12 +57,13 @@
 
             <v-card-actions>
               <router-link :to="{ name: 'test', params: { id: test.path } }">
-                <v-btn variant="outlined" color="indigo-darken-3"> Пройти </v-btn>
+                <v-btn variant="outlined" color="indigo-darken-3">
+                  Пройти
+                </v-btn>
               </router-link>
             </v-card-actions>
           </v-card>
         </v-col>
-      </v-col>
     </v-container>
   </div>
 
@@ -54,6 +96,7 @@ export default {
   data() {
     return {
       allTests: null,
+      searchValue: null,
     };
   },
   methods: {
@@ -65,6 +108,10 @@ export default {
         (r) => r.json()
       );
       return { testsList };
+    },
+    findSearchedTest() {
+      this.allTests.newTestArray = this.allTests.testsList.filter(searchingTest => searchingTest.title == this.searchValue)
+      
     },
   },
   async created() {
