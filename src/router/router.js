@@ -12,6 +12,11 @@ const routes = [
       component: () => import('../components/testsListComponent.vue'),
    },
    {
+      path: "/tests-create",
+      name: "createTestComponent",
+      component: () => import('../components/createTestComponent.vue'),
+   },
+   {
       path: "/tests/:id",
       name: "test",
       component: () => import('../components/testComponent.vue'),

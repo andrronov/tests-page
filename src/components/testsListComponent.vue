@@ -1,8 +1,9 @@
 <template>
   <header class="header">
-    <v-container class="d-flex align-center">
+    <v-container class="d-flex flex-column align-center">
+      <v-container class="d-flex flex-row align-center">
       <v-autocomplete
-        class="header_search"
+        class="w-100 header_search"
         style="color: white"
         variant="outlined"
         label="Найти тест"
@@ -11,6 +12,7 @@
         v-model="searchValue"
       ></v-autocomplete>
       <v-btn @click="findSearchedTest" icon="mdi-magnify"></v-btn>
+      </v-container>
     </v-container>
   </header>
 
@@ -19,6 +21,7 @@
     <v-container v-if="allTests?.newTestArray">
       <div class="title_button" style="display: flex; flex-direction: column; gap:10px">
         <h4 class="title">Найденные тесты</h4>
+        <h3 style="align-self:center; margin: 25px 0px" v-if="allTests.newTestArray == 0">Ничего не найдено</h3>
       <v-btn @click="allTests.newTestArray = 0" variant="outlined">Отменить поиск</v-btn>
       </div>
       <v-col v-for="(test, i) in allTests.newTestArray" :key="i">
@@ -26,9 +29,7 @@
           <v-card-item>
             <div>
               <div class="text-h6 mb-1">{{ test.title }}</div>
-              <div class="text-caption">
-                {{ test.description }}
-              </div>
+              <div class="text-caption">{{ test.description }}</div>
             </div>
           </v-card-item>
 
@@ -49,9 +50,8 @@
             <v-card-item>
               <div>
                 <div class="text-h6 mb-1">{{ test.title }}</div>
-                <div class="text-caption">
-                  {{ test.description }}
-                </div>
+                <div class="text-caption">{{ test.description }}</div>
+                <div class="text-caption">Категория: {{ test.category }}</div>
               </div>
             </v-card-item>
 
