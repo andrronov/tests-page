@@ -107,7 +107,7 @@ export default {
   methods: {
     async loadTest() {
       if (this.id) {
-        const testData = await fetch(`http://localhost:3000/${this.id}`).then(
+        const testData = await fetch(`http://localhost:3001/${this.id}`).then(
           (r) => r.json()
         );
         console.log("test loaded");
