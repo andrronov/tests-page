@@ -3,14 +3,14 @@
     
     <div class="test_window">
       <div v-if="showTest" class="test_wrap">
-      <h1>Вопрос {{ questionId + 1 }}/{{test.testData.length}}</h1>
+      <h1>Вопрос {{ questionId + 1 }}/{{test.testData.questions.length}}</h1>
       <div class="content_test">
         <p class="test_question">{{
-          test.testData[questionId].question
+          test.testData.questions[questionId].question
         }}</p>
         <div class="test_inputs">
           <label
-            v-for="(variant, index) in test.testData[questionId].variants"
+            v-for="(variant, index) in test.testData.questions[questionId].variants"
             :key="index"
             class="answer"
           >
@@ -30,11 +30,11 @@
           <v-btn :disabled="questionId <= 0" @click="changeQuestion('previous')" variant="outlined"
             >Предыдущий вопрос</v-btn>
           <v-btn
-            :disabled="questionId === this.test.length - 1" variant="outlined"
+            :disabled="questionId === this.test.testData.questions.length - 1" variant="outlined"
             @click="changeQuestion('next')"
             >Следующий вопрос</v-btn>
         </div>
-        <v-btn size="large" variant="outlined" color="green" elevation="4" @click="endTest">Закончить выполнение теста</v-btn>
+        <v-btn size="large" variant="outlined" color="green" elevation="4" @click="endTest">Завершить выполнение теста</v-btn>
       </div>
 
       <!-- <v-pagination v-model="questionId" :length="test.testData.length"></v-pagination> -->
@@ -87,27 +87,13 @@ export default {
       userAnswer: "",
       rightUserAnswers: 0,
       snackbar: false,
-      allRightAlert: false,
-      items: [
-        {
-          title: 'Item #1',
-          value: 1,
-        },
-        {
-          title: 'Item #2',
-          value: 2,
-        },
-        {
-          title: 'Item #3',
-          value: 3,
-        },
-      ],
+      allRightAlert: false
     };
   },
   methods: {
     async loadTest() {
       if (this.id) {
-        const testData = await fetch(`http://localhost:3001/${this.id}`).then(
+        const testData = await fetch(`http://localhost:3000/tests_list/${this.id}`).then(
           (r) => r.json()
         );
         console.log("test loaded");
@@ -121,7 +107,7 @@ export default {
       console.log(this.id);
     },
     writeAnswer() {
-      this.test.testData[this.questionId].userAnswer = this.userAnswer;
+      this.test.testData.questions[this.questionId].userAnswer = this.userAnswer;
       this.userAnswer = 0;
     },
     changeQuestion(data) {
@@ -137,15 +123,15 @@ export default {
     endTest() {
       this.writeAnswer();
 
-      for (let i = 0; this.test.testData.length > i; i++) {
+      for (let i = 0; this.test.testData.questions.length > i; i++) {
         if (
-          this.test.testData[i].rightAnswerIdx ==
-          this.test.testData[i].userAnswer
+          this.test.testData.questions[i].rightAnswerIdx ==
+          this.test.testData.questions[i].userAnswer
         ) {
           this.rightUserAnswers++;
         }
       }
-      if (this.rightUserAnswers === this.test.testData.length) {
+      if (this.rightUserAnswers === this.test.testData.questions.length) {
         this.allRightAlert = true;
       }
 

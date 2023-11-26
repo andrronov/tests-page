@@ -34,7 +34,7 @@
           </v-card-item>
 
           <v-card-actions>
-            <router-link :to="{ name: 'test', params: { id: test.path } }">
+            <router-link :to="{ name: 'test', params: { id: test.id } }">
               <v-btn variant="outlined" color="indigo-darken-3">
                 Пройти
               </v-btn>
@@ -56,7 +56,7 @@
             </v-card-item>
 
             <v-card-actions>
-              <router-link :to="{ name: 'test', params: { id: test.path } }">
+              <router-link :to="{ name: 'test', params: { id: test.id } }">
                 <v-btn variant="outlined" color="indigo-darken-3">
                   Пройти
                 </v-btn>
