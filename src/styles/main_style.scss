@@ -143,3 +143,12 @@ body{
   // margin: -16px;
   padding: 16px;
 }
+
+._reg{
+  gap: 35px;
+  background: rgb(242,242,255);
+background: radial-gradient(circle, rgba(242,242,255,1) 4%, rgba(145,166,222,1) 36%, rgba(0,98,172,1) 58%);
+  img{
+    width: 150px;
+  }
+}
