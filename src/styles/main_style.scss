@@ -1,0 +1,145 @@
+body{
+   height: 100%;
+   overflow-y: hidden;
+}
+
+.content_test {
+   min-height: 200px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   gap: 5px;
+ }
+ .test_question{
+  color: white;
+  padding: 7.5px 0.5px;
+  background-color: #1a237e;
+  font-size: 1.25rem;
+ }
+//  label .answer_input:checked + .input_question {
+//   color: red;
+//   font-weight: bold;
+// }
+ .answer {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+ }
+ .test_inputs {
+  margin: 5px 0px;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   align-items: center;
+ }
+ .input_question {
+   font-size: 1.15rem;
+   font-weight: 400;
+ }
+ .answer {
+   margin: 2.5px 0px;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   gap: 15px;
+ }
+ .answer_input:checked + .input_question{
+  color: white;
+  padding: 5px;
+  margin: -5px;
+  background-color: #1a237e;
+ }
+ .answer_input {
+   height: 28px;
+   width: 28px;
+   display: none;
+ }
+
+ .content-loader{
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ }
+ .test_window{
+  position: absolute;
+  display: flex;flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 0; bottom: 0; right: 0; left: 0;
+  background-color: #1a237e;
+ }
+ .test_wrap{
+  width: 100%;
+  display: flex;flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 25px 0px;
+ }
+
+ .test_buttons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+ }
+
+
+ .buttons_next-prev{
+  display: flex;flex-direction: row;
+  gap: 15px;
+ }
+ .title{
+   text-align: center;
+   color: white;
+   background-color: #1a237e;
+   padding: 5px;
+   margin-top: 25px;
+ } .title:hover{color: #1a237e; background-color: white; transition: ease-in-out all 0.5s;}
+
+
+ .wrapper {
+   width: 100%;
+   min-height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+ }
+ .skelet-loader {
+   margin: 10px auto;
+   width: 90%;
+ }
+
+ .wrapper-center{
+   position: absolute;
+   top: 0;bottom: 0;right: 0;left: 0;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   gap: 75px;
+ }
+
+ .page_buttons{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   gap: 35px;
+ }
+
+
+//  header
+
+.header{
+  width: 100%;
+  background-color: #1a237e;
+}
+.header_search{
+  // margin: -16px;
+  padding: 16px;
+}
