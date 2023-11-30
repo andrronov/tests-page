@@ -181,6 +181,9 @@ export default {
           .then((resp) => {
             console.log(resp.data);
             this.testAddedSuccessfully = true;
+            setTimeout(() => {
+              this.$router.push('/home')
+            }, 3000);
           })
           .catch((error) => {
             console.log(error);

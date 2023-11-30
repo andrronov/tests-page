@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  props: ["username"],
    data() {
       return {
          dialog: false

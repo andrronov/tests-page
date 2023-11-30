@@ -45,6 +45,8 @@
             <v-toolbar-title class="mt-4">Пароль</v-toolbar-title>
             <v-text-field v-model="userPassword" type="password" clearable label="Введите" variant="outlined" color="indigo-darken-3"></v-text-field>
             <v-btn @click="registerUser" variant="outlined" color="indigo-darken-3" class="mt-6" size="large">Принять</v-btn>
+            <v-alert v-model="regSuccess" text="Вы успешно зарегистрировались!" type="success" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
+            <v-alert v-model="regError" text="Ошибка" type="error" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
           </v-container>
           </v-list>
         </v-card>
@@ -53,7 +55,7 @@
 </template>
 
 <script>
-import UserController from '../../back/controllers/user_controllers.js'
+import axios from 'axios'
 
 export default {
 data:() =>({
@@ -62,10 +64,34 @@ data:() =>({
   userPassword: null,
 
   regDialog: false,
+  regSuccess: false,
+  regError: false
 }),
 methods: {
   registerUser(){
-    
+    axios.post('http://localhost:3003/api/user', {
+        "username": this.username,
+        "email": this.userMail,
+        "password": this.userPassword
+      } 
+    )
+    .then((res)=> {
+      if(res.status == 200){
+        this.regSuccess = true
+        setTimeout(() => {
+          this.regSuccess = false
+          this.$router.push({name: "homePageComponent"})
+        }, 2500)
+      }
+      })
+      .catch((error)=>{
+        if(error.response.status == 400){
+          this.regError = true
+          setTimeout(() => {
+            this.regError = false
+          }, 5000);
+        }
+      })
   }
 }
 }
