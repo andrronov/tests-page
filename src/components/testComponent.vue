@@ -58,7 +58,7 @@
     </div>
   </div>
   <v-skeleton-loader
-    v-if="!test"
+    v-if="!test && !loadError"
     :elevation="10"
     class="skelet-loader"
     color="outlined blue-lighten-4"
@@ -73,6 +73,13 @@
     type="success"
     variant="outlined"
   ></v-alert>
+
+  <!-- test load error -->
+  <v-alert
+    v-if="loadError"
+    text="Такого теста не существует!"
+    type="error"
+    variant="outlined"></v-alert>
 </template>
 
 <script>
@@ -87,24 +94,18 @@ export default {
       userAnswer: "",
       rightUserAnswers: 0,
       snackbar: false,
-      allRightAlert: false
+      allRightAlert: false,
+      loadError: false
     };
   },
   methods: {
     async loadTest() {
-      if (this.id) {
-        const testData = await fetch(`http://localhost:3000/tests_list/${this.id}`).then(
-          (r) => r.json()
-        );
-        console.log("test loaded");
+        const testData = await fetch(`http://localhost:3000/tests_list/${this.id}`)
+        .then((r) => {
+          if(r.ok) {return r.json()}
+          else{this.loadError = true}
+        })
         return { testData };
-      } else {
-        setTimeout(() => {
-          this.loadTest();
-          console.log("test didnt found, load again....");
-        }, 1000);
-      }
-      console.log(this.id);
     },
     writeAnswer() {
       this.test.testData.questions[this.questionId].userAnswer = this.userAnswer;
