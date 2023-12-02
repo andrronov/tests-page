@@ -1,6 +1,7 @@
 import pool from "../db.js"
 import bcrypt from 'bcrypt'
 import { validationResult } from "express-validator"
+import store from '../../src/vuex/store.js'
 
 class UserController {
    async createUser(req, res){

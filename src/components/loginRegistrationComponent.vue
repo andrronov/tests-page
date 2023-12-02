@@ -67,6 +67,9 @@ data:() =>({
   regSuccess: false,
   regError: false
 }),
+created(){
+  console.log(this.$store.state.loggedIn)
+},
 methods: {
   registerUser(){
     axios.post('http://localhost:3003/api/user', {
@@ -78,6 +81,8 @@ methods: {
     .then((res)=> {
       if(res.status == 200){
         this.regSuccess = true
+        this.$store.dispatch('login')
+        console.log(this.$store.state.loggedIn)
         setTimeout(() => {
           this.regSuccess = false
           this.$router.push({name: "homePageComponent"})

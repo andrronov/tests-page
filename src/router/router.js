@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import store from '../vuex/store.js';
 
 const routes = [
    {
@@ -8,18 +9,22 @@ const routes = [
    {
       path: "/home", name: "homePageComponent",
       component: () => import('../components/mainComponent.vue'),
+      meta: {isAuthed: store.state.loggedIn}
    },
    {
       path: "/tests", name: "testsListComponent",
       component: () => import('../components/testsListComponent.vue'),
+      meta: {isAuthed: store.state.loggedIn}
    },
    {
       path: "/tests-create", name: "createTestComponent",
       component: () => import('../components/createTestComponent.vue'),
+      meta: {isAuthed: store.state.loggedIn}
    },
    {
       path: "/tests/:id", name: "test",
       component: () => import('../components/testComponent.vue'),
+      meta: {isAuthed: store.state.loggedIn},
       props: true
    },
    {
@@ -33,4 +38,10 @@ const router = createRouter({
    routes,
  });
  
+ router.beforeEach((to, from, next) => {
+   if(to.meta.isAuthed == false){
+      next({path: "/"})
+   } else { next() }
+ })
+
  export default router;
