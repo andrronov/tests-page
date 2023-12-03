@@ -52,6 +52,49 @@
         </v-card>
       </v-dialog>
     </v-row>
+
+
+
+    <v-row justify="center">
+      <v-dialog
+        v-model="logDialog"
+        fullscreen
+        :scrim="false"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-toolbar
+            dark
+            color="indigo-darken-3"
+          >
+            <v-btn
+              icon
+              dark
+              @click="logDialog = false"
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title class="text-center">Войти в аккаунт</v-toolbar-title>
+          </v-toolbar>
+          <v-divider></v-divider>
+          <v-list class="d-flex flex-column align-center"
+            lines="two"
+            subheader
+          >
+          <v-divider></v-divider>
+          <v-container class="d-flex flex-column mt-8">
+            <v-toolbar-title class="mt-1">Никнейм</v-toolbar-title>
+            <v-text-field v-model="username" clearable class="w-100" label="Введите" variant="outlined" color="indigo-darken-3"></v-text-field>
+            <v-toolbar-title class="mt-4">Пароль</v-toolbar-title>
+            <v-text-field v-model="userPassword" type="password" clearable label="Введите" variant="outlined" color="indigo-darken-3"></v-text-field>
+            <v-btn @click="logUser" variant="outlined" color="indigo-darken-3" class="mt-6" size="large">Войти</v-btn>
+            <v-alert v-model="regSuccess" text="Вы успешно зарегистрировались!" type="success" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
+            <v-alert v-model="regError" text="Ошибка" type="error" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
+          </v-container>
+          </v-list>
+        </v-card>
+      </v-dialog>
+    </v-row>
 </template>
 
 <script>
@@ -64,11 +107,12 @@ data:() =>({
   userPassword: null,
 
   regDialog: false,
+  logDialog: false,
   regSuccess: false,
   regError: false
 }),
-created(){
-  console.log(this.$store.state.loggedIn)
+beforeCreate(){
+  this.$store.commit('loadStore')
 },
 methods: {
   registerUser(){
@@ -81,12 +125,10 @@ methods: {
     .then((res)=> {
       if(res.status == 200){
         this.regSuccess = true
-        this.$store.dispatch('login')
-        console.log(this.$store.state.loggedIn)
+        this.$store.commit('logIn', this.username)
         setTimeout(() => {
-          this.regSuccess = false
           this.$router.push({name: "homePageComponent"})
-        }, 2500)
+        }, 2000)
       }
       })
       .catch((error)=>{

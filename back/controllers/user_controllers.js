@@ -28,11 +28,11 @@ class UserController {
       res.json(users.rows)
    }
 
-   async getOneUser(req, res){
+   async getOneUserByName(req, res){
       const id = req.params.id
-      const user = await pool.query('SELECT * from users where person_id = $1', [id])
+      const user = await pool.query('SELECT * from users where name = $1', [id])
 
-      res.json(user.rows[0])
+      res.json(user)
    }
 
    async updateUser(req, res){
@@ -47,11 +47,6 @@ class UserController {
       const deletedUser = pool.query('DELETE FROM users where person_id = $1', [person_id])
 
       res.json(deletedUser.rows)
-   }
-
-   async login(req, res){
-      const {username, password} = req.body
-      const user = await pool.query('SELECT * from users where person_id = $1', [])
    }
 }
 

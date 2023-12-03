@@ -15,6 +15,10 @@ const vuetify = createVuetify({
    directives,
  })
 
+ store.subscribe((mutations, state) => {
+  localStorage.setItem('store', JSON.stringify(state))
+ })
+
 const app = createApp(App)
 app.use(store)
 app.use(router)

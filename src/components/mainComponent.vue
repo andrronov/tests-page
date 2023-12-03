@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-center">
-    <h2 class="title">Здравствуйте! Выберите действие:</h2>
+    <h2 class="title">Здравствуйте, {{$store.getters.auth.username}}! Выберите действие:</h2>
     <div class="page_buttons">
       <router-link to="/tests">
         <v-btn variant="outlined" size="x-large" elevation="4"> Пройти тест </v-btn>
@@ -19,6 +19,9 @@ export default {
       return {
          dialog: false
       }
+   },
+   mounted(){
+    console.log(this.$store.getters.auth.username)
    }
 };
 </script>

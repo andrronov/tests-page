@@ -12,7 +12,7 @@ router.post('/user', [
 ], UserController.createUser);
 router.get('/user', UserController.getUsers);
 // создать путь с почтами
-router.get('/user/:id', UserController.getOneUser);
+router.get('/user/:id', UserController.getOneUserByName);
 router.put('/user', UserController.updateUser);
 router.delete('/user/:id', UserController.deleteUser);
 

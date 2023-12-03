@@ -51,7 +51,7 @@
       </div>
       <div v-if="!showTest" class="test_wrap">
         <h2 style="margin-bottom: 15px">Правильных ответов: {{ rightUserAnswers }}</h2>
-        <router-link to="/">
+        <router-link to="/home">
           <v-btn variant="outlined" color="indigo" elevation="4">На главную</v-btn>
         </router-link>
       </div>
