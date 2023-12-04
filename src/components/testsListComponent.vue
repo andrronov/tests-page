@@ -7,7 +7,7 @@
           style="color: white"
           variant="outlined"
           label="Найти тест"
-          :items="allTests?.testsList"
+          :items="allTests"
           @keydown.enter="findSearchedTest"
           v-model="searchValue"
         ></v-autocomplete>
@@ -66,7 +66,7 @@
     </v-container>
     <v-container v-if="allTests">
       <h4 class="title">Все тесты</h4>
-      <v-col v-for="(test, i) in allTests.testsList" :key="i">
+      <v-col v-for="(test, i) in allTests" :key="i">
         <v-card color="indigo-darken-3" variant="outlined">
           <v-card-item>
             <div>
@@ -84,6 +84,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <v-card-title v-if="allLoaded">Все тесты загружены!</v-card-title>
+      <v-btn :loading="testsLoads" @click="infiniteScroll" variant="outlined">Загрузить еще</v-btn>
     </v-container>
   </div>
 
@@ -111,6 +113,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { testCategories } from '../sources/test_categories.js'
 
 export default {
@@ -121,27 +124,55 @@ export default {
       searchValue: null,
       searchCategories: null,
 
-      testCategory: testCategories
+      testCategory: testCategories,
+
+      page: 1,
+      testsLoads: false,
+      allLoaded: false
     };
   },
+  computed: {
+    url(){
+      return "http://localhost:3000/tests_list?_page=" + this.page;
+    }
+  },
   methods: {
+    infiniteScroll(){
+      this.testsLoads = true
+      setTimeout(() => {
+        this.page ++;
+        axios
+          .get(this.url)
+          .then(response => {
+            this.testsLoads = false
+            if (response.data.length > 1) {
+              response.data.forEach(item => this.allTests.push(item));
+            } else {
+              this.allLoaded = true
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }, 200);
+    },
     takeTest(data) {
       this.$emit("test-data", data);
     },
     async fetchAllTests() {
-      const testsList = await fetch("http://localhost:3000/tests_list").then(
+      const testsList = await fetch(this.url).then(
         (r) => r.json()
       );
-      return { testsList };
+      this.allTests = testsList;
     },
     findSearchedTest() {
-      this.allTests.newTestArray = this.allTests.testsList.filter(
+      this.allTests.newTestArray = this.allTests.filter(
         (searchingTest) => searchingTest.title == this.searchValue || searchingTest.category == this.searchCategories
       );
     },
   },
   async created() {
-    this.allTests = await this.fetchAllTests();
+    await this.fetchAllTests();
   },
 };
 </script>

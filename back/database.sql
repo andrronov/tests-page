@@ -6,6 +6,14 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS tests_list (
+  id INT PRIMARY KEY,
+  title VARCHAR(255),
+  description VARCHAR(255),
+  category VARCHAR(255),
+  author VARCHAR(255)
+);
+
 -- CREATE TABLE quizzes (
 --   id INT PRIMARY KEY AUTO_INCREMENT,
 --   title VARCHAR(100) NOT NULL,
