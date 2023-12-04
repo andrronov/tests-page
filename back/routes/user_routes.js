@@ -13,6 +13,7 @@ router.post('/user', [
 router.get('/user', UserController.getUsers);
 // создать путь с почтами
 router.get('/user/:id', UserController.getOneUserByName);
+router.post('/user/login', UserController.login);
 router.put('/user', UserController.updateUser);
 router.delete('/user/:id', UserController.deleteUser);
 

@@ -30,9 +30,9 @@ class UserController {
 
    async getOneUserByName(req, res){
       const id = req.params.id
-      const user = await pool.query('SELECT * from users where name = $1', [id])
+      const user = await pool.query('SELECT password from users where name = $1', [id])
 
-      res.json(user)
+      res.json(user.rows[0])
    }
 
    async updateUser(req, res){
@@ -47,6 +47,25 @@ class UserController {
       const deletedUser = pool.query('DELETE FROM users where person_id = $1', [person_id])
 
       res.json(deletedUser.rows)
+   }
+
+   async login(req, res){
+      try{
+         const {username, password} = req.body
+         const user_password = await pool.query('SELECT password FROM users where name = $1', [username])
+         if(user_password.rows.length < 1){
+            return res.status(404).json({message: "Такого пользователя не существует."})
+         }
+         const compare = await bcrypt.compare(password, user_password.rows[0].password)
+         if(!compare){
+            return res.status(404).json({message: 'Пароль неверный'})
+         }
+         res.status(200).json({message: 'Успешный вход!'})
+      }
+      catch(error){
+         console.log(error)
+         res.status(400).json({message: 'Ошибка во входе'})
+      }
    }
 }
 

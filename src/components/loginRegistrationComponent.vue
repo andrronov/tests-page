@@ -3,7 +3,7 @@
       <img src="../images/question-message-svgrepo-com.gif" alt="main-icon">
       <h2 class="title">QuizQues - сборник лучших тестов и викторин</h2>
       <div class="page_buttons">
-          <v-btn variant="outlined" color="indigo-darken-3" size="x-large" elevation="4"> Войти </v-btn>
+          <v-btn variant="outlined" color="indigo-darken-3" size="x-large" elevation="4" @click="logDialog = true"> Войти </v-btn>
           <v-btn variant="outlined" size="x-large" color="indigo-darken-3" elevation="4" @click="regDialog = true"> Зарегестрироваться </v-btn>
       </div>
     </div>
@@ -88,8 +88,8 @@
             <v-toolbar-title class="mt-4">Пароль</v-toolbar-title>
             <v-text-field v-model="userPassword" type="password" clearable label="Введите" variant="outlined" color="indigo-darken-3"></v-text-field>
             <v-btn @click="logUser" variant="outlined" color="indigo-darken-3" class="mt-6" size="large">Войти</v-btn>
-            <v-alert v-model="regSuccess" text="Вы успешно зарегистрировались!" type="success" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
-            <v-alert v-model="regError" text="Ошибка" type="error" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
+            <v-alert v-model="regSuccess" :text="backRes" type="success" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
+            <v-alert v-model="regError" :text="backRes" type="error" variant="outlined" style="min-height: 50px; margin-top: 20px"></v-alert>
           </v-container>
           </v-list>
         </v-card>
@@ -109,7 +109,9 @@ data:() =>({
   regDialog: false,
   logDialog: false,
   regSuccess: false,
-  regError: false
+  regError: false,
+
+  backRes: null
 }),
 beforeCreate(){
   this.$store.commit('loadStore')
@@ -139,6 +141,28 @@ methods: {
           }, 5000);
         }
       })
+  },
+  logUser(){
+    axios.post(`http://localhost:3003/api/user/login`, {
+      "username": this.username,
+      "password": this.userPassword
+    }).then((res) => {
+      if(res.status == 200){
+        this.$store.commit('logIn', this.username)
+        this.backRes = res.data.message
+        this.regSuccess = true
+        setTimeout(() => {
+          this.$router.push({path: '/home'})
+        }, 1000);
+      }
+    }).catch((error) => {
+      if(error.response.status == 404){
+        this.backRes = error.response.data.message
+        this.regError = true
+        setTimeout(() => {
+          this.regError = false
+        }, 2500);}
+    })
   }
 }
 }
