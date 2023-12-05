@@ -171,6 +171,6 @@ methods: {
 }
 </script>
 
-<style>
+<style lang="scss">
 @import url("../styles/main_style.scss");
 </style>
