@@ -3,7 +3,6 @@ import { createStore } from 'vuex'
 const store = createStore({
 state: {
     user: {
-        loggedIn: false,
         username: null
     }
 },
@@ -14,11 +13,10 @@ getters: {
 },
 mutations: {
   logIn(state, name){
-    state.user.loggedIn = true
     state.user.username = name
   },
   logOut(state){
-    state.user.loggedIn = false
+    state.user.username = null
   },
   loadStore(){
     if(localStorage.getItem('store')){

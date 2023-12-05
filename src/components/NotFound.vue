@@ -1,6 +1,6 @@
 <template>
   <h1 class="title">Страница не найдена!</h1>
-  <p>Вернуться на главную <router-link to="/"></router-link></p>
+  <router-link to="/">Вернуться на главную</router-link>
 </template>
 
 <script>

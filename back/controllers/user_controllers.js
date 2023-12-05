@@ -2,6 +2,13 @@ import pool from "../db.js"
 import bcrypt from 'bcrypt'
 import { validationResult } from "express-validator"
 import store from '../../src/vuex/store.js'
+import jwt from 'jsonwebtoken'
+import { secret } from './config.js'
+
+const generateAccessToken = (id) => {
+   const payload = {id}
+   return jwt.sign(payload, secret, {expiresIn: "2h"})
+}
 
 class UserController {
    async createUser(req, res){
@@ -52,6 +59,7 @@ class UserController {
    async login(req, res){
       try{
          const {username, password} = req.body
+         const user_id = await pool.query('SELECT person_id FROM users where name = $1', [username])
          const user_password = await pool.query('SELECT password FROM users where name = $1', [username])
          if(user_password.rows.length < 1){
             return res.status(404).json({message: "Такого пользователя не существует."})
@@ -60,7 +68,8 @@ class UserController {
          if(!compare){
             return res.status(404).json({message: 'Пароль неверный'})
          }
-         res.status(200).json({message: 'Успешный вход!'})
+         const token = generateAccessToken(user_id)
+         res.status(200).json({token, message: 'Успешный вход!'})
       }
       catch(error){
          console.log(error)

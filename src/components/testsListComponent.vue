@@ -63,6 +63,8 @@
           </v-card-actions>
         </v-card>
       </v-col>
+      <v-card-title v-if="allLoaded">Все тесты загружены!</v-card-title>
+      <v-btn :loading="testsLoads" @click="infiniteScroll(this.allTests.newTestArray)" variant="outlined">Загрузить еще</v-btn>
     </v-container>
     <v-container v-if="allTests">
       <h4 class="title">Все тесты</h4>
@@ -85,7 +87,7 @@
         </v-card>
       </v-col>
       <v-card-title v-if="allLoaded">Все тесты загружены!</v-card-title>
-      <v-btn :loading="testsLoads" @click="infiniteScroll" variant="outlined">Загрузить еще</v-btn>
+      <v-btn :loading="testsLoads" @click="infiniteScroll(this.allTests)" variant="outlined">Загрузить еще</v-btn>
     </v-container>
   </div>
 
@@ -137,7 +139,7 @@ export default {
     }
   },
   methods: {
-    infiniteScroll(){
+    infiniteScroll(array){
       this.testsLoads = true
       setTimeout(() => {
         this.page ++;
@@ -146,7 +148,7 @@ export default {
           .then(response => {
             this.testsLoads = false
             if (response.data.length > 1) {
-              response.data.forEach(item => this.allTests.push(item));
+              response.data.forEach(item => array.push(item));
             } else {
               this.allLoaded = true
             }

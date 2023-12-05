@@ -6,6 +6,7 @@
           <v-btn variant="outlined" color="indigo-darken-3" size="x-large" elevation="4" @click="logDialog = true"> Войти </v-btn>
           <v-btn variant="outlined" size="x-large" color="indigo-darken-3" elevation="4" @click="regDialog = true"> Зарегистрироваться </v-btn>
       </div>
+      <p style="bottom: 0px; position:absolute">andrronov, 2023</p>
     </div>
 
 
@@ -128,6 +129,8 @@ methods: {
       if(res.status == 200){
         this.regSuccess = true
         this.$store.commit('logIn', this.username)
+        window.isLogged = true
+        localStorage.setItem('isLogged', JSON.stringify(window.isLogged))
         setTimeout(() => {
           this.$router.push({name: "homePageComponent"})
         }, 2000)
@@ -135,7 +138,6 @@ methods: {
       })
       .catch((error)=>{
           this.backRes = error.response.data.message
-          console.log(error.response.data.message)
           this.regError = true
           setTimeout(() => {
             this.regError = false
@@ -149,6 +151,8 @@ methods: {
     }).then((res) => {
       if(res.status == 200){
         this.$store.commit('logIn', this.username)
+        window.isLogged = true
+        localStorage.setItem('isLogged', JSON.stringify(window.isLogged))
         this.backRes = res.data.message
         this.regSuccess = true
         setTimeout(() => {

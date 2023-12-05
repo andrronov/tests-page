@@ -125,6 +125,9 @@ export default {
     questAddingSuccess: false,
     testAddedSuccessfully: false,
   }),
+  mounted(){
+    this.testAutor = this.$store.getters.auth.username
+  },
   methods: {
     addQuestion() {
       if (
